@@ -1,7 +1,8 @@
 name: docker build & push
 
-on: push
-branches:
+on:
+  push:
+    branches:
       - main
 
 jobs:
