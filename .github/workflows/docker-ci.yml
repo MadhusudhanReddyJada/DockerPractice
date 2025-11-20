@@ -1,0 +1,14 @@
+name: first docker action
+on: push
+jobs: 
+  build-and-run:
+    run-on: ubuntu-latest
+    steps:
+      -name: Checkout Repository
+      uses: actions/checkout@v4
+
+      -name: Build Docker Image
+      uses: docker build -t hello-docker .
+
+      -name: Run Docker Container
+      uses: docker run hello-docker
