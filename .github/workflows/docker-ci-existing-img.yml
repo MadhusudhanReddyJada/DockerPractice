@@ -1,4 +1,4 @@
-name: docker build & push
+name: Docker action with existing docker image from DockerHub 
 
 on:
   push:
