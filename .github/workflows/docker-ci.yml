@@ -5,10 +5,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
-      uses: actions/checkout@v4
+        uses: actions/checkout@v4
       
       - name: Build Docker Image
-      run: docker build -t hello-docker .
+        run: docker build -t hello-docker .
       
       - name: Run Docker Container
-      run: docker run hello-docker
+        run: docker run hello-docker
