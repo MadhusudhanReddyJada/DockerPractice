@@ -2,7 +2,7 @@ name: first docker action
 on: push
 jobs: 
   build-and-run:
-    run-on: ubuntu-latest
+    runs-on: ubuntu-latest
     steps:
       -name: Checkout Repository
       uses: actions/checkout@v4
