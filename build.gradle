@@ -1,0 +1,52 @@
+// groovy
+plugins {
+    id("java")
+    id("io.qameta.allure") version "2.12.0"
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation("org.junit.jupiter:junit-jupiter:5.11.0")
+    testImplementation("io.rest-assured:rest-assured:5.5.0")
+    testImplementation("org.assertj:assertj-core:3.26.0")
+    testImplementation("io.qameta.allure:allure-junit5:2.27.0")
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
+
+
+}
+tasks.withType(JavaCompile).configureEach {
+    options.annotationProcessorPath = configurations.annotationProcessor
+}
+
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(21))
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    systemProperty("baseUrl", "https://rickandmortyapi.com")
+    finalizedBy(tasks.named("allureReport"))
+}
+
+tasks.register("allureReport", io.qameta.allure.gradle.task.AllureReport) {
+    group = "verification"
+    description = "Generate Allure report from results"
+    resultsDirs.set(files("$buildDir/allure-results"))
+    reportDir.set(layout.buildDirectory.dir("reports/allure-report"))
+    clean = true
+}
+
+allure {
+    version = "2.27.0"
+    adapter {
+        aspectjWeaver.set(true)
+    }
+}
