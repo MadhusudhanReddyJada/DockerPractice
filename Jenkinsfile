@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'mkdir -p build && echo "Hello artifact" > build/output.txt'
+                bat 'mkdir -p build && echo "Hello artifact" > build/output.txt'
             }
         }
 
