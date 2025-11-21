@@ -35,14 +35,22 @@ tasks.test {
     systemProperty("baseUrl", "https://rickandmortyapi.com")
     finalizedBy(tasks.named("allureReport"))
 }
-
-tasks.register("allureReport", io.qameta.allure.gradle.task.AllureReport) {
-    group = "verification"
-    description = "Generate Allure report from results"
-    resultsDirs.set(files("$buildDir/allure-results"))
-    reportDir.set(layout.buildDirectory.dir("reports/allure-report"))
-    clean = true
+test {
+    useJUnitPlatform()
+    systemProperty "allure.results.directory", "$buildDir/allure-results"
 }
+
+allureReport {
+    dependsOn test
+}
+
+//tasks.register("allureReport", io.qameta.allure.gradle.task.AllureReport) {
+//    group = "verification"
+//    description = "Generate Allure report from results"
+//    resultsDirs.set(files("$buildDir/allure-results"))
+//    reportDir.set(layout.buildDirectory.dir("reports/allure-report"))
+//    clean = true
+//}
 
 allure {
     version = "2.27.0"
