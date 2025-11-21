@@ -2,22 +2,22 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build') {
             steps {
-                echo 'Building project...'
+                sh 'mkdir -p build && echo "Hello artifact" > build/output.txt'
             }
         }
 
         stage('Test') {
             steps {
-                echo 'Running tests...'
+                echo 'Fake tests are running...'
             }
+        }
+    }
+
+    post {
+        success {
+            archiveArtifacts artifacts: 'build/**', fingerprint: true
         }
     }
 }
